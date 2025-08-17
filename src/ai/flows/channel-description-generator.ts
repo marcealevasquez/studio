@@ -18,7 +18,7 @@ const ChannelDescriptionInputSchema = z.object({
 export type ChannelDescriptionInput = z.infer<typeof ChannelDescriptionInputSchema>;
 
 const ChannelDescriptionOutputSchema = z.object({
-  channelDescription: z.string().describe('The AI-generated description of the TV channel.'),
+  channelDescription: z.string().describe('La descripción del canal de TV generada por IA.'),
 });
 export type ChannelDescriptionOutput = z.infer<typeof ChannelDescriptionOutputSchema>;
 
@@ -32,7 +32,7 @@ const channelDescriptionPrompt = ai.definePrompt({
   output: {schema: ChannelDescriptionOutputSchema},
   prompt: `You are an AI assistant specializing in creating engaging and informative descriptions for TV channels.
 
-  Based on the channel's name and URL, generate a concise description that captures the essence of the channel's content and target audience.
+  Based on the channel's name and URL, generate a concise description in Spanish that captures the essence of the channel's content and target audience.
 
   Channel Name: {{{channelName}}}
   Channel URL: {{{channelUrl}}}

@@ -49,12 +49,5 @@ export const INITIAL_CHANNELS: Channel[] = [
     url: 'https://www.youtube.com/watch?v=J06Fp_18o-s',
     description: 'Canal de televisión chileno.',
     isVisible: true,
-  },
-  {
-    id: '10',
-    name: 'Pokemon',
-    url: 'https://www.twitch.tv/pokemon',
-    description: 'Canal oficial de Pokémon en Twitch.',
-    isVisible: true,
   }
 ];

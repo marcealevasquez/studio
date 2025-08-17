@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import StreamPlayer from '@/components/StreamPlayer';
+import YouTubePlayer from '@/components/StreamPlayer';
 import { useChannels } from '@/hooks/useChannels';
 import { useGrid } from '@/hooks/useGrid';
-import { cn, getYouTubeId, getTwitchChannel, getStreamSource } from '@/lib/utils';
+import { cn, getYouTubeId } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 import { useTheater } from '@/hooks/useTheater';
 import { Channel } from '@/types';
@@ -67,14 +67,12 @@ export default function ChannelGrid() {
   }
 
   const renderPlayer = (channel: Channel, smallPlayer = false) => {
-    const source = getStreamSource(channel.url);
-    const videoId = source === 'youtube' ? getYouTubeId(channel.url) : getTwitchChannel(channel.url);
-    if (!videoId || !source) return null;
+    const videoId = getYouTubeId(channel.url);
+    if (!videoId) return null;
 
     return (
-       <StreamPlayer
+       <YouTubePlayer
         videoId={videoId}
-        source={source}
         title={channel.name}
         smallPlayer={smallPlayer}
       />

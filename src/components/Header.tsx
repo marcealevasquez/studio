@@ -76,26 +76,30 @@ export default function Header() {
                   </>
                 )}
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <LayoutGrid className="mr-2 h-4 w-4" />
-                  <span>Tamaño Grilla ({gridSize})</span>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuRadioGroup
-                    value={gridSize}
-                    onValueChange={(value) =>
-                      setGridSize(value as '2x2' | '3x3' | '4x4' | '5x5')
-                    }
-                  >
-                    <DropdownMenuRadioItem value="2x2">2x2</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="3x3">3x3</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="4x4">4x4</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="5x5">5x5</DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
+              {!isTheaterMode && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <LayoutGrid className="mr-2 h-4 w-4" />
+                      <span>Tamaño Grilla ({gridSize})</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuRadioGroup
+                        value={gridSize}
+                        onValueChange={(value) =>
+                          setGridSize(value as '2x2' | '3x3' | '4x4' | '5x5')
+                        }
+                      >
+                        <DropdownMenuRadioItem value="2x2">2x2</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="3x3">3x3</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="4x4">4x4</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="5x5">5x5</DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 

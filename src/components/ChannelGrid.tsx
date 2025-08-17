@@ -20,7 +20,6 @@ export default function ChannelGrid() {
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex flex-col gap-2">
             <Skeleton className="aspect-video w-full rounded-lg" />
-            <Skeleton className="h-6 w-3/4 rounded-md" />
           </div>
         ))}
       </div>
@@ -36,9 +35,6 @@ export default function ChannelGrid() {
         return (
           <div key={channel.id} className="group flex flex-col gap-2">
             <YouTubePlayer videoId={videoId} title={channel.name} />
-            <h3 className="text-center text-lg font-medium text-foreground transition-colors group-hover:text-primary">
-              {channel.name}
-            </h3>
           </div>
         );
       })}

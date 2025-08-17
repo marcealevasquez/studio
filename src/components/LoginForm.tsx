@@ -15,7 +15,11 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { LockKeyhole } from 'lucide-react';
 
-export default function LoginForm() {
+interface LoginFormProps {
+  onLoginSuccess: () => void;
+}
+
+export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   const [password, setPassword] = useState('');
   const { login } = useAdmin();
   const { toast } = useToast();
@@ -23,7 +27,13 @@ export default function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const success = login(password);
-    if (!success) {
+    if (success) {
+      toast({
+        title: 'Éxito',
+        description: 'Has iniciado sesión correctamente.',
+      });
+      onLoginSuccess();
+    } else {
       toast({
         title: 'Error',
         description: 'Contraseña incorrecta.',

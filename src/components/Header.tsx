@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useAdmin } from '@/hooks/useAdmin';
 import { Button } from '@/components/ui/button';
@@ -26,6 +27,7 @@ import LoginForm from './LoginForm';
 export default function Header() {
   const { isAdmin, isLoading, logout } = useAdmin();
   const { gridSize, setGridSize } = useGrid();
+  const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -85,14 +87,14 @@ export default function Header() {
                 </Button>
               </>
             ) : (
-              <Sheet>
+              <Sheet open={isLoginSheetOpen} onOpenChange={setIsLoginSheetOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost">
                     <LogIn className="mr-2 h-4 w-4" /> Admin Login
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="w-full max-w-sm">
-                   <LoginForm />
+                   <LoginForm onLoginSuccess={() => setIsLoginSheetOpen(false)} />
                 </SheetContent>
               </Sheet>
             )}

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 
 const ADMIN_PASSWORD = 'superadmin';
 const STORAGE_KEY = 'isSuperAdmin';
@@ -9,7 +8,6 @@ const STORAGE_KEY = 'isSuperAdmin';
 export function useAdmin() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -30,7 +28,6 @@ export function useAdmin() {
         try {
           localStorage.setItem(STORAGE_KEY, 'true');
           setIsAdmin(true);
-          router.push('/');
           return true;
         } catch (error) {
           console.error('Could not access localStorage', error);
@@ -39,18 +36,17 @@ export function useAdmin() {
       }
       return false;
     },
-    [router]
+    []
   );
 
   const logout = useCallback(() => {
     try {
       localStorage.removeItem(STORAGE_KEY);
       setIsAdmin(false);
-      router.push('/');
     } catch (error) {
       console.error('Could not access localStorage', error);
     }
-  }, [router]);
+  }, []);
 
   return { isAdmin, isLoading, login, logout };
 }

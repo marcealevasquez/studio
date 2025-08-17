@@ -26,18 +26,6 @@ export const INITIAL_CHANNELS: Channel[] = [
     description: 'Señal de CNN para Chile, con noticias y análisis internacional.',
   },
   {
-    id: '5',
-    name: 'Senado Chile',
-    url: 'https://www.youtube.com/watch?v=c5GETs2i8ww',
-    description: 'Transmisiones en vivo de las sesiones y comisiones del Senado de Chile.',
-  },
-  {
-    id: '6',
-    name: 'Cámara de Diputadas y Diputados de Chile',
-    url: 'https://www.youtube.com/watch?v=rltgJgI-32M',
-    description: 'Transmisiones en vivo de la Cámara de Diputadas y Diputados de Chile.',
-  },
-  {
     id: '7',
     name: 'Chilevisión Noticias',
     url: 'https://www.youtube.com/watch?v=Cxg_4A9s-9o',

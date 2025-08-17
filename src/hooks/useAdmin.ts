@@ -30,7 +30,7 @@ export function useAdmin() {
         try {
           localStorage.setItem(STORAGE_KEY, 'true');
           setIsAdmin(true);
-          router.push('/admin');
+          router.push('/');
           return true;
         } catch (error) {
           console.error('Could not access localStorage', error);

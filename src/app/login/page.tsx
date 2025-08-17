@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!isLoading && isAdmin) {
-      router.push('/admin');
+      router.push('/');
     }
   }, [isAdmin, isLoading, router]);
 

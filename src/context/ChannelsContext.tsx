@@ -12,6 +12,7 @@ type ChannelsContextType = {
   addChannel: (channel: Omit<Channel, 'id'>) => void;
   updateChannel: (updatedChannel: Channel) => void;
   deleteChannel: (id: string) => void;
+  reorderChannels: (draggedChannel: Channel, targetChannel: Channel) => void;
 };
 
 export const ChannelsContext = createContext<ChannelsContextType | undefined>(undefined);
@@ -63,7 +64,22 @@ export function ChannelsProvider({ children }: { children: React.ReactNode }) {
     setChannels((prev) => prev.filter((c) => c.id !== id));
   }, []);
 
-  const value = useMemo(() => ({ channels, isLoaded, addChannel, updateChannel, deleteChannel }), [channels, isLoaded, addChannel, updateChannel, deleteChannel]);
+  const reorderChannels = useCallback((draggedChannel: Channel, targetChannel: Channel) => {
+    setChannels(prev => {
+      const newChannels = [...prev];
+      const draggedIndex = newChannels.findIndex(c => c.id === draggedChannel.id);
+      const targetIndex = newChannels.findIndex(c => c.id === targetChannel.id);
+
+      if (draggedIndex === -1 || targetIndex === -1) return prev;
+
+      const [removed] = newChannels.splice(draggedIndex, 1);
+      newChannels.splice(targetIndex, 0, removed);
+      
+      return newChannels;
+    });
+  }, []);
+
+  const value = useMemo(() => ({ channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels }), [channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels]);
 
   return <ChannelsContext.Provider value={value}>{children}</ChannelsContext.Provider>;
 }

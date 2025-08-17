@@ -46,7 +46,7 @@ export function useAdmin() {
     try {
       localStorage.removeItem(STORAGE_KEY);
       setIsAdmin(false);
-      router.push('/login');
+      router.push('/');
     } catch (error) {
       console.error('Could not access localStorage', error);
     }

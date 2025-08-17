@@ -21,6 +21,7 @@ import {
 import AdminPanelContent from './AdminPanel';
 import { LogIn, LogOut, Tv, UserCog, LayoutGrid, Loader2 } from 'lucide-react';
 import { useGrid } from '@/hooks/useGrid';
+import LoginForm from './LoginForm';
 
 export default function Header() {
   const { isAdmin, isLoading, logout } = useAdmin();
@@ -84,11 +85,16 @@ export default function Header() {
                 </Button>
               </>
             ) : (
-              <Button variant="ghost" asChild>
-                <Link href="/login">
-                  <LogIn className="mr-2 h-4 w-4" /> Admin Login
-                </Link>
-              </Button>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost">
+                    <LogIn className="mr-2 h-4 w-4" /> Admin Login
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full max-w-sm">
+                   <LoginForm />
+                </SheetContent>
+              </Sheet>
             )}
           </nav>
         </div>

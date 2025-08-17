@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useAdmin } from '@/hooks/useAdmin';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,19 +13,12 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { LockKeyhole, Loader2 } from 'lucide-react';
+import { LockKeyhole } from 'lucide-react';
 
-export default function LoginPage() {
+export default function LoginForm() {
   const [password, setPassword] = useState('');
-  const { login, isAdmin, isLoading } = useAdmin();
-  const router = useRouter();
+  const { login } = useAdmin();
   const { toast } = useToast();
-
-  useEffect(() => {
-    if (!isLoading && isAdmin) {
-      router.push('/');
-    }
-  }, [isAdmin, isLoading, router]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,17 +33,9 @@ export default function LoginPage() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
   return (
-    <div className="flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
+    <div className="flex h-full items-center justify-center">
+       <Card className="w-full max-w-sm border-0 shadow-none">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <LockKeyhole className="h-8 w-8 text-primary" />

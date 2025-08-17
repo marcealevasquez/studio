@@ -20,7 +20,15 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import AdminPanelContent from './AdminPanel';
-import { LogIn, LogOut, Tv, UserCog, LayoutGrid, Loader2 } from 'lucide-react';
+import {
+  LogIn,
+  LogOut,
+  Tv,
+  UserCog,
+  LayoutGrid,
+  Loader2,
+  LockKeyhole,
+} from 'lucide-react';
 import { useGrid } from '@/hooks/useGrid';
 import LoginForm from './LoginForm';
 
@@ -95,9 +103,9 @@ export default function Header() {
                 </SheetTrigger>
                 <SheetContent className="w-full max-w-sm">
                   <SheetHeader className="text-center">
-                     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                        <LockKeyhole className="h-8 w-8 text-primary" />
-                     </div>
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                      <LockKeyhole className="h-8 w-8 text-primary" />
+                    </div>
                     <SheetTitle>Acceso de Administrador</SheetTitle>
                     <SheetDescription>
                       Ingrese la contraseña para gestionar los canales.

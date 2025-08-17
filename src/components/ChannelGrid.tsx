@@ -4,35 +4,10 @@ import { useRef } from 'react';
 import YouTubePlayer from '@/components/YouTubePlayer';
 import { useChannels } from '@/hooks/useChannels';
 import { useGrid } from '@/hooks/useGrid';
-import { cn } from '@/lib/utils';
+import { cn, getYouTubeId } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 import { useTheater } from '@/hooks/useTheater';
 import { Channel } from '@/types';
-
-function getYouTubeId(url: string): string | null {
-  try {
-    const urlObj = new URL(url);
-    if (urlObj.hostname === 'youtu.be') {
-      return urlObj.pathname.slice(1);
-    }
-    if (urlObj.hostname.includes('youtube.com')) {
-      const videoId = urlObj.searchParams.get('v');
-      if (videoId) {
-        return videoId;
-      }
-      const paths = urlObj.pathname.split('/');
-      if (paths[1] === 'embed') {
-        return paths[2];
-      }
-    }
-  } catch (error) {
-    const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-  }
-  return null;
-}
 
 export default function ChannelGrid() {
   const { channels, isLoaded, reorderChannels } = useChannels();
@@ -76,7 +51,8 @@ export default function ChannelGrid() {
     dropTargetItem.current = null;
   };
 
-  const currentMainChannel = isTheaterMode ? mainChannel || channels[0] : null;
+  const currentMainChannel = isTheaterMode ? mainChannel || channels.find(c => c.isVisible ?? true) : null;
+  const visibleChannels = channels.filter(c => c.isVisible ?? true);
 
   if (!isLoaded) {
     return (
@@ -117,7 +93,7 @@ export default function ChannelGrid() {
             isTheaterMode,
         })}
       >
-        {channels.map((channel) => {
+        {visibleChannels.map((channel) => {
           const videoId = getYouTubeId(channel.url);
           if (!videoId) return null;
 

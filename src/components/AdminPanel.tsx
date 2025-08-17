@@ -25,10 +25,11 @@ import {
 } from '@/components/ui/alert-dialog';
 import ChannelForm from '@/components/ChannelForm';
 import { Channel } from '@/types';
-import { PlusCircle, Trash2, Pencil, Loader2, LogOut } from 'lucide-react';
+import { PlusCircle, Trash2, Pencil, Loader2, LogOut, Eye, EyeOff } from 'lucide-react';
+import { getYouTubeId } from '@/lib/utils';
 
 export default function AdminPanelContent() {
-  const { channels, deleteChannel, isLoaded: areChannelsLoaded } = useChannels();
+  const { channels, deleteChannel, isLoaded: areChannelsLoaded, toggleChannelVisibility } = useChannels();
   const { logout } = useAdmin();
 
   return (
@@ -50,7 +51,7 @@ export default function AdminPanelContent() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[250px]">Nombre</TableHead>
-                <TableHead>URL</TableHead>
+                <TableHead>ID Video</TableHead>
                 <TableHead className="w-[120px] text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
@@ -66,17 +67,13 @@ export default function AdminPanelContent() {
                   <TableRow key={channel.id}>
                     <TableCell className="font-medium">{channel.name}</TableCell>
                     <TableCell className="max-w-xs truncate text-muted-foreground">
-                      <a
-                        href={channel.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-primary"
-                      >
-                        {channel.url}
-                      </a>
+                       {getYouTubeId(channel.url)}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
+                         <Button variant="ghost" size="icon" onClick={() => toggleChannelVisibility(channel.id)}>
+                          {channel.isVisible ?? true ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4 text-muted-foreground" />}
+                        </Button>
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button variant="ghost" size="icon">

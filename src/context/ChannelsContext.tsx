@@ -9,10 +9,11 @@ const STORAGE_KEY = 'channels';
 type ChannelsContextType = {
   channels: Channel[];
   isLoaded: boolean;
-  addChannel: (channel: Omit<Channel, 'id'>) => void;
+  addChannel: (channel: Omit<Channel, 'id'| 'isVisible'>) => void;
   updateChannel: (updatedChannel: Channel) => void;
   deleteChannel: (id: string) => void;
   reorderChannels: (draggedChannel: Channel, targetChannel: Channel) => void;
+  toggleChannelVisibility: (id: string) => void;
 };
 
 export const ChannelsContext = createContext<ChannelsContextType | undefined>(undefined);
@@ -47,10 +48,10 @@ export function ChannelsProvider({ children }: { children: React.ReactNode }) {
     }
   }, [channels, isLoaded]);
 
-  const addChannel = useCallback((channel: Omit<Channel, 'id'>) => {
+  const addChannel = useCallback((channel: Omit<Channel, 'id' | 'isVisible'>) => {
     setChannels((prev) => [
       ...prev,
-      { ...channel, id: new Date().toISOString() },
+      { ...channel, id: new Date().toISOString(), isVisible: true },
     ]);
   }, []);
 
@@ -79,7 +80,15 @@ export function ChannelsProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const value = useMemo(() => ({ channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels }), [channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels]);
+  const toggleChannelVisibility = useCallback((id: string) => {
+    setChannels((prev) =>
+      prev.map((c) =>
+        c.id === id ? { ...c, isVisible: !(c.isVisible ?? true) } : c
+      )
+    );
+  }, []);
+
+  const value = useMemo(() => ({ channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels, toggleChannelVisibility }), [channels, isLoaded, addChannel, updateChannel, deleteChannel, reorderChannels, toggleChannelVisibility]);
 
   return <ChannelsContext.Provider value={value}>{children}</ChannelsContext.Provider>;
 }

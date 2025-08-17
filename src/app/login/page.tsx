@@ -14,19 +14,19 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { LockKeyhole } from 'lucide-react';
+import { LockKeyhole, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const [password, setPassword] = useState('');
-  const { login, isAdmin } = useAdmin();
+  const { login, isAdmin, isLoading } = useAdmin();
   const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
-    if (isAdmin) {
+    if (!isLoading && isAdmin) {
       router.push('/admin');
     }
-  }, [isAdmin, router]);
+  }, [isAdmin, isLoading, router]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +40,14 @@ export default function LoginPage() {
       setPassword('');
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center p-4">

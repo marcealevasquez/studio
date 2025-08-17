@@ -33,15 +33,25 @@ import { Channel } from '@/types';
 import { PlusCircle, Trash2, Pencil, Loader2, ShieldAlert } from 'lucide-react';
 
 export default function AdminPage() {
-  const { isAdmin } = useAdmin();
+  const { isAdmin, isLoading: isAdminLoading } = useAdmin();
   const router = useRouter();
-  const { channels, deleteChannel, isLoaded } = useChannels();
+  const { channels, deleteChannel, isLoaded: areChannelsLoaded } = useChannels();
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (!isAdminLoading && !isAdmin) {
       router.push('/login');
     }
-  }, [isAdmin, router]);
+  }, [isAdmin, isAdminLoading, router]);
+  
+  const isLoaded = !isAdminLoading && areChannelsLoaded;
+
+  if (!isLoaded) {
+     return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   if (!isAdmin) {
     return (
@@ -52,14 +62,6 @@ export default function AdminPage() {
           Debes ser administrador para ver esta página.
         </p>
         <Button onClick={() => router.push('/login')}>Ir a Login</Button>
-      </div>
-    );
-  }
-  
-  if (!isLoaded) {
-     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }

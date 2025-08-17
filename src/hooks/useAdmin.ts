@@ -8,6 +8,7 @@ const STORAGE_KEY = 'isSuperAdmin';
 
 export function useAdmin() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,6 +19,8 @@ export function useAdmin() {
       }
     } catch (error) {
       console.error('Could not access localStorage', error);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -49,5 +52,5 @@ export function useAdmin() {
     }
   }, [router]);
 
-  return { isAdmin, login, logout };
+  return { isAdmin, isLoading, login, logout };
 }

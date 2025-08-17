@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import { GridProvider } from '@/context/GridContext';
 import { ChannelsProvider } from '@/context/ChannelsContext';
 import { AdminProvider } from '@/context/AdminContext';
+import { TheaterProvider } from '@/context/TheaterContext';
 
 export const metadata: Metadata = {
   title: 'Chilean TV Grid',
@@ -35,9 +36,11 @@ export default function RootLayout({
         <AdminProvider>
           <ChannelsProvider>
             <GridProvider>
-              <Header />
-              <main>{children}</main>
-              <Toaster />
+              <TheaterProvider>
+                <Header />
+                <main>{children}</main>
+                <Toaster />
+              </TheaterProvider>
             </GridProvider>
           </ChannelsProvider>
         </AdminProvider>

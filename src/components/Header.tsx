@@ -28,14 +28,18 @@ import {
   LayoutGrid,
   Loader2,
   LockKeyhole,
+  RectangleHorizontal,
+  RectangleVertical,
 } from 'lucide-react';
 import { useGrid } from '@/hooks/useGrid';
 import LoginForm from './LoginForm';
+import { useTheater } from '@/hooks/useTheater';
 
 export default function Header() {
   const { isAdmin, isLoading, logout } = useAdmin();
   const { gridSize, setGridSize } = useGrid();
   const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
+  const { isTheaterMode, toggleTheaterMode } = useTheater();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 px-5 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,6 +51,11 @@ export default function Header() {
           </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="ghost" onClick={toggleTheaterMode}>
+            {isTheaterMode ? <RectangleVertical className="mr-2 h-4 w-4" /> : <RectangleHorizontal className="mr-2 h-4 w-4" />}
+            <span>Modo Teatro</span>
+          </Button>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">

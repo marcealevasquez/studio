@@ -1,6 +1,7 @@
 'use client';
 
 import { useChannels } from '@/hooks/useChannels';
+import { useAdmin } from '@/hooks/useAdmin';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -24,107 +25,115 @@ import {
 } from '@/components/ui/alert-dialog';
 import ChannelForm from '@/components/ChannelForm';
 import { Channel } from '@/types';
-import { PlusCircle, Trash2, Pencil, Loader2 } from 'lucide-react';
+import { PlusCircle, Trash2, Pencil, Loader2, LogOut } from 'lucide-react';
 
 export default function AdminPanelContent() {
   const { channels, deleteChannel, isLoaded: areChannelsLoaded } = useChannels();
+  const { logout } = useAdmin();
 
   return (
-    <div className="py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" /> Agregar Canal
-            </Button>
-          </DialogTrigger>
-          <ChannelForm />
-        </Dialog>
-      </div>
+    <div className="flex h-full flex-col">
+      <div className="flex-grow py-8">
+        <div className="mb-6 flex items-center justify-between">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <PlusCircle className="mr-2 h-4 w-4" /> Agregar Canal
+              </Button>
+            </DialogTrigger>
+            <ChannelForm />
+          </Dialog>
+        </div>
 
-      <div className="overflow-hidden rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[250px]">Nombre</TableHead>
-              <TableHead>URL</TableHead>
-              <TableHead className="w-[120px] text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {!areChannelsLoaded ? (
+        <div className="overflow-hidden rounded-lg border">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={3} className="h-24 text-center">
-                  <Loader2 className="mx-auto h-6 w-6 animate-spin" />
-                </TableCell>
+                <TableHead className="w-[250px]">Nombre</TableHead>
+                <TableHead>URL</TableHead>
+                <TableHead className="w-[120px] text-right">Acciones</TableHead>
               </TableRow>
-            ) : channels.length > 0 ? (
-              channels.map((channel: Channel) => (
-                <TableRow key={channel.id}>
-                  <TableCell className="font-medium">{channel.name}</TableCell>
-                  <TableCell className="max-w-xs truncate text-muted-foreground">
-                    <a
-                      href={channel.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary"
-                    >
-                      {channel.url}
-                    </a>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                        </DialogTrigger>
-                        <ChannelForm channel={channel} />
-                      </Dialog>
-
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Esta acción no se puede deshacer. Esto eliminará
-                              permanentemente el canal.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => deleteChannel(channel.id)}
-                            >
-                              Eliminar
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
+            </TableHeader>
+            <TableBody>
+              {!areChannelsLoaded ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="h-24 text-center">
+                    <Loader2 className="mx-auto h-6 w-6 animate-spin" />
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={3} className="h-24 text-center">
-                  No hay canales. Agrega uno para empezar.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ) : channels.length > 0 ? (
+                channels.map((channel: Channel) => (
+                  <TableRow key={channel.id}>
+                    <TableCell className="font-medium">{channel.name}</TableCell>
+                    <TableCell className="max-w-xs truncate text-muted-foreground">
+                      <a
+                        href={channel.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-primary"
+                      >
+                        {channel.url}
+                      </a>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <ChannelForm channel={channel} />
+                        </Dialog>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Esta acción no se puede deshacer. Esto eliminará
+                                permanentemente el canal.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => deleteChannel(channel.id)}
+                              >
+                                Eliminar
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="h-24 text-center">
+                    No hay canales. Agrega uno para empezar.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
+       <div className="mt-auto border-t pt-4">
+          <Button variant="ghost" onClick={logout} className="w-full justify-start">
+            <LogOut className="mr-2 h-4 w-4" /> Cerrar Sesión
+          </Button>
+        </div>
     </div>
   );
 }

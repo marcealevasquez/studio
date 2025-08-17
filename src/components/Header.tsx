@@ -22,7 +22,6 @@ import {
 import AdminPanelContent from './AdminPanel';
 import {
   LogIn,
-  LogOut,
   Tv,
   UserCog,
   LayoutGrid,
@@ -35,7 +34,7 @@ import LoginForm from './LoginForm';
 import { useTheater } from '@/hooks/useTheater';
 
 export default function Header() {
-  const { isAdmin, isLoading, logout } = useAdmin();
+  const { isAdmin, isLoading } = useAdmin();
   const { gridSize, setGridSize } = useGrid();
   const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
   const { isTheaterMode, toggleTheaterMode } = useTheater();
@@ -107,9 +106,6 @@ export default function Header() {
                     <AdminPanelContent />
                   </SheetContent>
                 </Sheet>
-                <Button variant="ghost" onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" /> Logout
-                </Button>
               </>
             ) : (
               <Sheet open={isLoginSheetOpen} onOpenChange={setIsLoginSheetOpen}>

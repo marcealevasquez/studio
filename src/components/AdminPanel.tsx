@@ -26,11 +26,22 @@ import {
 import ChannelForm from '@/components/ChannelForm';
 import { Channel } from '@/types';
 import { PlusCircle, Trash2, Pencil, Loader2, LogOut, Eye, EyeOff } from 'lucide-react';
-import { getYouTubeId } from '@/lib/utils';
+import { getYouTubeId, getTwitchChannel, getStreamSource } from '@/lib/utils';
 
 export default function AdminPanelContent() {
   const { channels, deleteChannel, isLoaded: areChannelsLoaded, toggleChannelVisibility } = useChannels();
   const { logout } = useAdmin();
+
+  const getChannelIdentifier = (url: string) => {
+    const source = getStreamSource(url);
+    if (source === 'youtube') {
+      return getYouTubeId(url);
+    }
+    if (source === 'twitch') {
+      return getTwitchChannel(url);
+    }
+    return 'URL Inválida';
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -51,7 +62,7 @@ export default function AdminPanelContent() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[250px]">Nombre</TableHead>
-                <TableHead>ID Video</TableHead>
+                <TableHead>ID / Canal</TableHead>
                 <TableHead className="w-[120px] text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
@@ -67,7 +78,7 @@ export default function AdminPanelContent() {
                   <TableRow key={channel.id}>
                     <TableCell className="font-medium">{channel.name}</TableCell>
                     <TableCell className="max-w-xs truncate text-muted-foreground">
-                       {getYouTubeId(channel.url)}
+                       {getChannelIdentifier(channel.url)}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">

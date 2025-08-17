@@ -128,7 +128,7 @@ export default function ChannelForm({ channel }: ChannelFormProps) {
             name="url"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>URL de YouTube</FormLabel>
+                <FormLabel>URL de YouTube / Twitch</FormLabel>
                 <FormControl>
                   <Input placeholder="https://youtube.com/watch?v=..." {...field} />
                 </FormControl>

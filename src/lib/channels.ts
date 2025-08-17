@@ -4,7 +4,7 @@ export const INITIAL_CHANNELS: Channel[] = [
   {
     id: '1',
     name: 'Meganoticias',
-    url: 'https://www.youtube.com/watch?v=Cr9f1e6rIUc',
+    url: 'https://www.youtube.com/watch?v=HfCH3zezHgE',
     description: 'Canal de noticias de Mega, con información de Chile y el mundo.',
     isVisible: true,
   },
@@ -50,4 +50,11 @@ export const INITIAL_CHANNELS: Channel[] = [
     description: 'Canal de televisión chileno.',
     isVisible: true,
   },
+  {
+    id: '10',
+    name: 'Pokemon',
+    url: 'https://www.twitch.tv/pokemon',
+    description: 'Canal oficial de Pokémon en Twitch.',
+    isVisible: true,
+  }
 ];

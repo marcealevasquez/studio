@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import YouTubePlayer from '@/components/YouTubePlayer';
+import StreamPlayer from '@/components/StreamPlayer';
 import { useChannels } from '@/hooks/useChannels';
 import { useGrid } from '@/hooks/useGrid';
-import { cn, getYouTubeId } from '@/lib/utils';
+import { cn, getYouTubeId, getTwitchChannel, getStreamSource } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 import { useTheater } from '@/hooks/useTheater';
 import { Channel } from '@/types';
@@ -66,6 +66,21 @@ export default function ChannelGrid() {
     );
   }
 
+  const renderPlayer = (channel: Channel, smallPlayer = false) => {
+    const source = getStreamSource(channel.url);
+    const videoId = source === 'youtube' ? getYouTubeId(channel.url) : getTwitchChannel(channel.url);
+    if (!videoId || !source) return null;
+
+    return (
+       <StreamPlayer
+        videoId={videoId}
+        source={source}
+        title={channel.name}
+        smallPlayer={smallPlayer}
+      />
+    );
+  };
+  
   return (
     <div
       className={cn('p-2 transition-all duration-300 ease-in-out', {
@@ -78,10 +93,7 @@ export default function ChannelGrid() {
         })}
       >
         {isTheaterMode && currentMainChannel && (
-          <YouTubePlayer
-            videoId={getYouTubeId(currentMainChannel.url)!}
-            title={currentMainChannel.name}
-          />
+          renderPlayer(currentMainChannel, false)
         )}
       </div>
 
@@ -94,12 +106,9 @@ export default function ChannelGrid() {
         })}
       >
         {visibleChannels.map((channel) => {
-          const videoId = getYouTubeId(channel.url);
-          if (!videoId) return null;
-
           const isMain = currentMainChannel?.id === channel.id;
           if (isTheaterMode && isMain) return null;
-
+          
           return (
             <div
               key={channel.id}
@@ -111,11 +120,7 @@ export default function ChannelGrid() {
               onDragOver={(e) => e.preventDefault()}
               onClick={() => handleChannelClick(channel)}
             >
-              <YouTubePlayer
-                videoId={videoId}
-                title={channel.name}
-                smallPlayer={isTheaterMode}
-              />
+              {renderPlayer(channel, isTheaterMode)}
               {isTheaterMode && (
                 <p
                   className={cn(

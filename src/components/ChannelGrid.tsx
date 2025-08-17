@@ -16,9 +16,9 @@ export default function ChannelGrid() {
 
   if (!isLoaded) {
     return (
-       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex flex-col gap-4">
+       <div className="grid grid-cols-3 gap-2">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <div key={i} className="flex flex-col gap-2">
             <Skeleton className="aspect-video w-full rounded-lg" />
             <Skeleton className="h-6 w-3/4 rounded-md" />
           </div>
@@ -28,13 +28,13 @@ export default function ChannelGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-3 gap-2">
       {channels.map((channel) => {
         const videoId = getYouTubeId(channel.url);
         if (!videoId) return null;
 
         return (
-          <div key={channel.id} className="group flex flex-col gap-3">
+          <div key={channel.id} className="group flex flex-col gap-2">
             <YouTubePlayer videoId={videoId} title={channel.name} />
             <h3 className="text-center text-lg font-medium text-foreground transition-colors group-hover:text-primary">
               {channel.name}

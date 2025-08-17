@@ -113,11 +113,13 @@ export default function ChannelGrid() {
                 title={channel.name}
                 smallPlayer={isTheaterMode}
               />
-              <p className={cn("text-center font-medium truncate group-hover:text-primary", {
-                "text-sm text-muted-foreground hover:text-primary": isTheaterMode,
-              })}>
-                {channel.name}
-              </p>
+              {isTheaterMode && (
+                <p className={cn("text-center font-medium truncate group-hover:text-primary", {
+                  "text-sm text-muted-foreground hover:text-primary": isTheaterMode,
+                })}>
+                  {channel.name}
+                </p>
+              )}
             </div>
           );
         })}

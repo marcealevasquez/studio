@@ -60,8 +60,16 @@ export default function ChannelGrid() {
                 const videoId = getYouTubeId(channel.url);
                 if (!videoId) return null;
                 return (
-                    <div key={channel.id} className="cursor-pointer" onClick={() => handleChannelClick(channel)}>
-                        <YouTubePlayer videoId={videoId} title={channel.name} />
+                    <div key={channel.id} className="flex flex-col gap-1.5">
+                        <div className="cursor-pointer" onClick={() => handleChannelClick(channel)}>
+                            <YouTubePlayer videoId={videoId} title={channel.name} />
+                        </div>
+                        <a 
+                          onClick={() => handleChannelClick(channel)}
+                          className="text-center text-sm font-medium text-muted-foreground hover:text-primary cursor-pointer truncate"
+                        >
+                            {channel.name}
+                        </a>
                     </div>
                 )
             })}

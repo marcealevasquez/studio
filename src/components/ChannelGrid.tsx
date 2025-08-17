@@ -81,63 +81,51 @@ export default function ChannelGrid() {
     );
   };
   
-  return (
-    <div
-      className={cn('p-2 transition-all duration-300 ease-in-out', {
-        'flex flex-col': isTheaterMode,
-      })}
-    >
-      <div
-        className={cn({
-          'mb-2': isTheaterMode,
-        })}
-      >
-        {isTheaterMode && currentMainChannel && (
-          renderPlayer(currentMainChannel, false)
-        )}
-      </div>
+  if (isTheaterMode) {
+    return (
+      <div className="flex flex-row gap-2 p-2">
+        <div className="w-3/4">
+          {currentMainChannel && renderPlayer(currentMainChannel, false)}
+        </div>
+        <div className="flex w-1/4 flex-col gap-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
+          {visibleChannels.map((channel) => {
+            const isMain = currentMainChannel?.id === channel.id;
+            if (isMain) return null;
 
-      <div
-        className={cn('transition-all duration-300 ease-in-out', {
-          'grid gap-2': !isTheaterMode,
-          [gridClasses[gridSize]]: !isTheaterMode,
-          'grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-2':
-            isTheaterMode,
-        })}
-      >
-        {visibleChannels.map((channel) => {
-          const isMain = currentMainChannel?.id === channel.id;
-          if (isTheaterMode && isMain) return null;
-          
-          return (
-            <div
-              key={channel.id}
-              className="group flex flex-col gap-2 cursor-pointer"
-              draggable={!isTheaterMode}
-              onDragStart={() => handleDragStart(channel)}
-              onDragEnter={() => handleDragEnter(channel)}
-              onDragEnd={handleDragEnd}
-              onDragOver={(e) => e.preventDefault()}
-              onClick={() => handleChannelClick(channel)}
-            >
-              {renderPlayer(channel, isTheaterMode)}
-              {isTheaterMode && (
-                <p
-                  className={cn(
-                    'text-center font-medium truncate group-hover:text-primary',
-                    {
-                      'text-sm text-muted-foreground hover:text-primary':
-                        isTheaterMode,
-                    }
-                  )}
-                >
+            return (
+              <div
+                key={channel.id}
+                className="group flex flex-col gap-2 cursor-pointer"
+                onClick={() => handleChannelClick(channel)}
+              >
+                {renderPlayer(channel, true)}
+                <p className="text-center font-medium truncate group-hover:text-primary text-sm text-muted-foreground hover:text-primary">
                   {channel.name}
                 </p>
-              )}
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className={cn('grid gap-2 p-2', gridClasses[gridSize])}>
+      {visibleChannels.map((channel) => (
+        <div
+          key={channel.id}
+          className="group flex cursor-pointer flex-col gap-2"
+          draggable
+          onDragStart={() => handleDragStart(channel)}
+          onDragEnter={() => handleDragEnter(channel)}
+          onDragEnd={handleDragEnd}
+          onDragOver={(e) => e.preventDefault()}
+          onClick={() => handleChannelClick(channel)}
+        >
+          {renderPlayer(channel, false)}
+        </div>
+      ))}
     </div>
   );
 }

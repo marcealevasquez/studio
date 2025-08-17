@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/Header';
 import { GridProvider } from '@/context/GridContext';
 import { ChannelsProvider } from '@/context/ChannelsContext';
+import { AdminProvider } from '@/context/AdminContext';
 
 export const metadata: Metadata = {
   title: 'Chilean TV Grid',
@@ -31,13 +32,15 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased'
         )}
       >
-        <ChannelsProvider>
-          <GridProvider>
-            <Header />
-            <main>{children}</main>
-            <Toaster />
-          </GridProvider>
-        </ChannelsProvider>
+        <AdminProvider>
+          <ChannelsProvider>
+            <GridProvider>
+              <Header />
+              <main>{children}</main>
+              <Toaster />
+            </GridProvider>
+          </ChannelsProvider>
+        </AdminProvider>
       </body>
     </html>
   );

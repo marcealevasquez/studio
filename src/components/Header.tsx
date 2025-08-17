@@ -38,8 +38,8 @@ export default function Header() {
   const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-14 items-center px-5">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 px-5 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex h-14 items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <Tv className="h-6 w-6 text-primary" />
           <span className="hidden font-bold sm:inline-block">

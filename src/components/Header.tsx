@@ -94,7 +94,18 @@ export default function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent className="w-full max-w-sm">
-                   <LoginForm onLoginSuccess={() => setIsLoginSheetOpen(false)} />
+                  <SheetHeader className="text-center">
+                     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                        <LockKeyhole className="h-8 w-8 text-primary" />
+                     </div>
+                    <SheetTitle>Acceso de Administrador</SheetTitle>
+                    <SheetDescription>
+                      Ingrese la contraseña para gestionar los canales.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <LoginForm
+                    onLoginSuccess={() => setIsLoginSheetOpen(false)}
+                  />
                 </SheetContent>
               </Sheet>
             )}

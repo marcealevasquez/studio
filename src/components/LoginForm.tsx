@@ -8,12 +8,8 @@ import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { LockKeyhole } from 'lucide-react';
 
 interface LoginFormProps {
   onLoginSuccess: () => void;
@@ -46,16 +42,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   return (
     <div className="flex h-full items-center justify-center">
        <Card className="w-full max-w-sm border-0 shadow-none">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-            <LockKeyhole className="h-8 w-8 text-primary" />
-          </div>
-          <CardTitle>Acceso de Administrador</CardTitle>
-          <CardDescription>
-            Ingrese la contraseña para gestionar los canales.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="password">Contraseña</Label>

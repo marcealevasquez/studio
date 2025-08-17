@@ -7,8 +7,13 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -28,6 +33,7 @@ import {
   Loader2,
   LockKeyhole,
   RectangleHorizontal,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useGrid } from '@/hooks/useGrid';
 import LoginForm from './LoginForm';
@@ -49,39 +55,47 @@ export default function Header() {
           </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-2">
-           <Button variant="ghost" onClick={toggleTheaterMode}>
-            {isTheaterMode ? (
-              <>
-                <LayoutGrid className="mr-2 h-4 w-4" />
-                <span>Modo Grilla</span>
-              </>
-            ) : (
-              <>
-                <RectangleHorizontal className="mr-2 h-4 w-4" />
-                <span>Modo Teatro</span>
-              </>
-            )}
-          </Button>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost">
-                <LayoutGrid className="mr-2 h-4 w-4" />
-                <span>{gridSize}</span>
+              <Button variant="ghost" size="icon">
+                <LayoutDashboard />
+                <span className="sr-only">Layout Options</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuRadioGroup
-                value={gridSize}
-                onValueChange={(value) =>
-                  setGridSize(value as '2x2' | '3x3' | '4x4' | '5x5')
-                }
-              >
-                <DropdownMenuRadioItem value="2x2">2x2</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="3x3">3x3</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="4x4">4x4</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="5x5">5x5</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={toggleTheaterMode}>
+                {isTheaterMode ? (
+                  <>
+                    <LayoutGrid className="mr-2 h-4 w-4" />
+                    <span>Modo Grilla</span>
+                  </>
+                ) : (
+                  <>
+                    <RectangleHorizontal className="mr-2 h-4 w-4" />
+                    <span>Modo Teatro</span>
+                  </>
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <LayoutGrid className="mr-2 h-4 w-4" />
+                  <span>Tamaño Grilla ({gridSize})</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuRadioGroup
+                    value={gridSize}
+                    onValueChange={(value) =>
+                      setGridSize(value as '2x2' | '3x3' | '4x4' | '5x5')
+                    }
+                  >
+                    <DropdownMenuRadioItem value="2x2">2x2</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="3x3">3x3</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="4x4">4x4</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="5x5">5x5</DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
             </DropdownMenuContent>
           </DropdownMenu>
 

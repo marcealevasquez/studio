@@ -83,11 +83,10 @@ export default function ChannelGrid() {
   
   if (isTheaterMode) {
     return (
-      <div className="flex flex-row gap-2 p-2">
-        <div className="w-3/4">
-          {currentMainChannel && renderPlayer(currentMainChannel, false)}
-        </div>
-        <div className="flex w-1/4 flex-col gap-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
+      <div className="flex flex-col gap-2 p-2">
+        {currentMainChannel && renderPlayer(currentMainChannel, false)}
+
+        <div className="grid grid-cols-6 gap-2">
           {visibleChannels.map((channel) => {
             const isMain = currentMainChannel?.id === channel.id;
             if (isMain) return null;
@@ -95,11 +94,11 @@ export default function ChannelGrid() {
             return (
               <div
                 key={channel.id}
-                className="group flex flex-col gap-2 cursor-pointer"
+                className="group flex cursor-pointer flex-col gap-2"
                 onClick={() => handleChannelClick(channel)}
               >
                 {renderPlayer(channel, true)}
-                <p className="text-center font-medium truncate group-hover:text-primary text-sm text-muted-foreground hover:text-primary">
+                <p className="truncate text-center text-sm text-muted-foreground group-hover:text-primary">
                   {channel.name}
                 </p>
               </div>

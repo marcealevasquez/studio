@@ -14,9 +14,9 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import AdminPanelContent from './AdminPanel';
@@ -29,7 +29,6 @@ import {
   Loader2,
   LockKeyhole,
   RectangleHorizontal,
-  RectangleVertical,
 } from 'lucide-react';
 import { useGrid } from '@/hooks/useGrid';
 import LoginForm from './LoginForm';
@@ -51,9 +50,18 @@ export default function Header() {
           </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <Button variant="ghost" onClick={toggleTheaterMode}>
-            {isTheaterMode ? <RectangleVertical className="mr-2 h-4 w-4" /> : <RectangleHorizontal className="mr-2 h-4 w-4" />}
-            <span>Modo Teatro</span>
+           <Button variant="ghost" onClick={toggleTheaterMode}>
+            {isTheaterMode ? (
+              <>
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                <span>Modo Grilla</span>
+              </>
+            ) : (
+              <>
+                <RectangleHorizontal className="mr-2 h-4 w-4" />
+                <span>Modo Teatro</span>
+              </>
+            )}
           </Button>
 
           <DropdownMenu>

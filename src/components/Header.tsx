@@ -3,10 +3,19 @@
 import Link from 'next/link';
 import { useAdmin } from '@/hooks/useAdmin';
 import { Button } from '@/components/ui/button';
-import { LogIn, LogOut, Tv, UserCog } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { LogIn, LogOut, Tv, UserCog, LayoutGrid, Check } from 'lucide-react';
+import { useGrid } from '@/hooks/useGrid';
 
 export default function Header() {
   const { isAdmin, logout } = useAdmin();
+  const { gridSize, setGridSize } = useGrid();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -18,6 +27,26 @@ export default function Header() {
           </span>
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                <span>{gridSize}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuRadioGroup
+                value={gridSize}
+                onValueChange={(value) => setGridSize(value as '2x2' | '3x3' | '4x4' | '5x5')}
+              >
+                <DropdownMenuRadioItem value="2x2">2x2</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="3x3">3x3</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="4x4">4x4</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="5x5">5x5</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <nav className="flex items-center gap-2">
             {isAdmin ? (
               <>

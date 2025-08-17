@@ -37,4 +37,22 @@ export const INITIAL_CHANNELS: Channel[] = [
     url: 'https://www.youtube.com/watch?v=rltgJgI-32M',
     description: 'Transmisiones en vivo de la Cámara de Diputadas y Diputados de Chile.',
   },
+  {
+    id: '7',
+    name: 'Chilevisión Noticias',
+    url: 'https://www.youtube.com/watch?v=Cxg_4A9s-9o',
+    description: 'Noticias de Chilevisión.',
+  },
+  {
+    id: '8',
+    name: 'La Red',
+    url: 'https://www.youtube.com/watch?v=s_6E3a3Pq5A',
+    description: 'Canal de televisión chileno.',
+  },
+  {
+    id: '9',
+    name: 'TV+',
+    url: 'https://www.youtube.com/watch?v=J06Fp_18o-s',
+    description: 'Canal de televisión chileno.',
+  },
 ];

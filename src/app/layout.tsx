@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/Header';
+import { GridProvider } from '@/context/GridContext';
 
 export const metadata: Metadata = {
   title: 'Chilean TV Grid',
@@ -29,9 +30,11 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased'
         )}
       >
-        <Header />
-        <main>{children}</main>
-        <Toaster />
+        <GridProvider>
+          <Header />
+          <main>{children}</main>
+          <Toaster />
+        </GridProvider>
       </body>
     </html>
   );

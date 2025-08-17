@@ -2,6 +2,8 @@
 
 import YouTubePlayer from '@/components/YouTubePlayer';
 import { useChannels } from '@/hooks/useChannels';
+import { useGrid } from '@/hooks/useGrid';
+import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 
 function getYouTubeId(url: string): string | null {
@@ -13,10 +15,18 @@ function getYouTubeId(url: string): string | null {
 
 export default function ChannelGrid() {
   const { channels, isLoaded } = useChannels();
+  const { gridSize } = useGrid();
+
+  const gridClasses = {
+    '2x2': 'grid-cols-2',
+    '3x3': 'grid-cols-3',
+    '4x4': 'grid-cols-4',
+    '5x5': 'grid-cols-5',
+  };
 
   if (!isLoaded) {
     return (
-       <div className="grid grid-cols-3 gap-2">
+       <div className={cn('grid gap-2', gridClasses[gridSize])}>
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex flex-col gap-2">
             <Skeleton className="aspect-video w-full rounded-lg" />
@@ -27,7 +37,7 @@ export default function ChannelGrid() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className={cn('grid gap-2', gridClasses[gridSize])}>
       {channels.map((channel) => {
         const videoId = getYouTubeId(channel.url);
         if (!videoId) return null;

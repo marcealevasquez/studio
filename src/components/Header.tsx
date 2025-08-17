@@ -107,7 +107,7 @@ export default function Header() {
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button variant="ghost">
-                      <UserCog className="mr-2 h-4 w-4" /> Admin
+                      <UserCog className="mr-2 h-4 w-4" /> Ajustes
                     </Button>
                   </SheetTrigger>
                   <SheetContent className="w-1/2 overflow-y-auto">

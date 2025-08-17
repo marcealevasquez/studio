@@ -69,7 +69,7 @@ export default function Header() {
                       <UserCog className="mr-2 h-4 w-4" /> Admin
                     </Button>
                   </SheetTrigger>
-                  <SheetContent className="w-[600px] sm:w-[600px] overflow-y-auto">
+                  <SheetContent className="w-1/2 overflow-y-auto">
                     <SheetHeader>
                       <SheetTitle>Panel de Administración</SheetTitle>
                       <SheetDescription>

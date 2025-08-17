@@ -9,16 +9,35 @@ import { useTheater } from '@/hooks/useTheater';
 import { Channel } from '@/types';
 
 function getYouTubeId(url: string): string | null {
-  const regExp =
-    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return match && match[2].length === 11 ? match[2] : null;
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.hostname === 'youtu.be') {
+      return urlObj.pathname.slice(1);
+    }
+    if (urlObj.hostname.includes('youtube.com')) {
+      const videoId = urlObj.searchParams.get('v');
+      if (videoId) {
+        return videoId;
+      }
+      const paths = urlObj.pathname.split('/');
+      if (paths[1] === 'embed') {
+        return paths[2];
+      }
+    }
+  } catch (error) {
+    // Fallback for invalid URLs
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  }
+  return null;
 }
 
 export default function ChannelGrid() {
   const { channels, isLoaded } = useChannels();
   const { gridSize } = useGrid();
-  const { isTheaterMode, mainChannel, setMainChannel } = useTheater();
+  const { isTheaterMode, mainChannel, setMainChannel, toggleTheaterMode } = useTheater();
 
   const gridClasses = {
     '2x2': 'grid-cols-2',
@@ -30,6 +49,9 @@ export default function ChannelGrid() {
   const handleChannelClick = (channel: Channel) => {
     if (isTheaterMode) {
       setMainChannel(channel);
+    } else {
+       setMainChannel(channel);
+       toggleTheaterMode();
     }
   };
 
@@ -47,6 +69,14 @@ export default function ChannelGrid() {
 
   if (isTheaterMode) {
     const currentMainChannel = mainChannel || channels[0];
+    if (!currentMainChannel) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <p>No hay canales disponibles.</p>
+            </div>
+        )
+    }
+
     const otherChannels = channels.filter((c) => c.id !== currentMainChannel.id);
     const mainVideoId = getYouTubeId(currentMainChannel.url);
     
@@ -62,7 +92,7 @@ export default function ChannelGrid() {
                 return (
                     <div key={channel.id} className="flex flex-col gap-1.5">
                         <div className="cursor-pointer" onClick={() => handleChannelClick(channel)}>
-                            <YouTubePlayer videoId={videoId} title={channel.name} />
+                            <YouTubePlayer videoId={videoId} title={channel.name} smallPlayer/>
                         </div>
                         <a 
                           onClick={() => handleChannelClick(channel)}
@@ -85,8 +115,9 @@ export default function ChannelGrid() {
         if (!videoId) return null;
 
         return (
-          <div key={channel.id} className="group flex flex-col gap-2" onClick={() => handleChannelClick(channel)}>
+          <div key={channel.id} className="group flex flex-col gap-2 cursor-pointer" onClick={() => handleChannelClick(channel)}>
             <YouTubePlayer videoId={videoId} title={channel.name} />
+             <p className="text-center font-medium truncate group-hover:text-primary">{channel.name}</p>
           </div>
         );
       })}

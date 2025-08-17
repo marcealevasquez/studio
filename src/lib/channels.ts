@@ -4,19 +4,19 @@ export const INITIAL_CHANNELS: Channel[] = [
   {
     id: '1',
     name: 'Meganoticias',
-    url: 'https://www.youtube.com/watch?v=Cz5V2i2d52A',
+    url: 'https://www.youtube.com/watch?v=Cr9f1e6rIUc',
     description: 'Canal de noticias de Mega, con información de Chile y el mundo.',
   },
   {
     id: '2',
     name: '24 Horas',
-    url: 'https://www.youtube.com/watch?v=j_8y3a-5c_Y',
+    url: 'https://www.youtube.com/watch?v=h3Jn8f-YKRk',
     description: 'Canal de noticias 24/7 de Televisión Nacional de Chile (TVN).',
   },
   {
     id: '3',
     name: 'T13',
-    url: 'https://www.youtube.com/watch?v=kvp-z48nGkk',
+    url: 'https://www.youtube.com/watch?v=R_V7FhsCPwM',
     description: 'Señal de noticias de Canal 13, con reportajes y actualidad.',
   },
   {
@@ -28,7 +28,7 @@ export const INITIAL_CHANNELS: Channel[] = [
   {
     id: '7',
     name: 'Chilevisión Noticias',
-    url: 'https://www.youtube.com/watch?v=Cxg_4A9s-9o',
+    url: 'https://www.youtube.com/watch?v=H3AFMMYG_tU',
     description: 'Noticias de Chilevisión.',
   },
   {

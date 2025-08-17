@@ -16,7 +16,7 @@ export default function YouTubePlayer({ videoId, title, smallPlayer }: YouTubePl
 
   const src = smallPlayer
     ? `https://www.youtube.com/embed/${videoId}?mute=1&loop=1&playlist=${videoId}&controls=0`
-    : `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+    : `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0`;
 
   return (
     <div className="aspect-video w-full overflow-hidden rounded-lg border shadow-lg transition-all duration-300 hover:shadow-primary/20">
